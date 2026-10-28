@@ -1,0 +1,11 @@
+-- O seed global é intencionalmente vazio.
+--
+-- Posts demonstrativos são criados por usuário pela função
+-- public.seed_demo_posts(), pois dependem de auth.uid() e da RLS.
+--
+-- Depois de criar uma conta e entrar no app, o primeiro carregamento do feed
+-- executa a função automaticamente. Para rodar manualmente no SQL Editor:
+--
+--   select public.seed_demo_posts();
+--
+-- Não crie usuários diretamente em auth.users por este arquivo.
