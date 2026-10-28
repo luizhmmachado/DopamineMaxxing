@@ -1,4 +1,5 @@
 import { Image } from 'expo-image';
+import * as Linking from 'expo-linking';
 import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui/app-text';
@@ -17,11 +18,25 @@ interface TextFeedItemProps {
   onComment: () => void;
   onRepost: () => void;
   onShare: () => void;
+  onOpenNetwork?: () => void;
 }
 
-export function TextFeedItem({ post, onLike, onComment, onRepost, onShare }: TextFeedItemProps) {
+export function TextFeedItem({
+  post,
+  onLike,
+  onComment,
+  onRepost,
+  onShare,
+  onOpenNetwork,
+}: TextFeedItemProps) {
   const { colors } = useAppTheme();
   const { animationsEnabled, dataSaver } = usePerformance();
+
+  const handleOpenNetwork = () => {
+    if (!post.originalUrl) return;
+    Linking.openURL(post.originalUrl).catch(() => undefined);
+  };
+
   return (
     <Card style={styles.card}>
       <PostAuthorRow post={post} avatarSize={40} />
@@ -48,6 +63,7 @@ export function TextFeedItem({ post, onLike, onComment, onRepost, onShare }: Tex
           onComment={onComment}
           onRepost={onRepost}
           onShare={onShare}
+          onOpenNetwork={onOpenNetwork ?? handleOpenNetwork}
         />
       </View>
     </Card>

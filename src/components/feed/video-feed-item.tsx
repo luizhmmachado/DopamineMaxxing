@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Linking from 'expo-linking';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -27,6 +28,7 @@ interface VideoFeedItemProps {
   onComment: () => void;
   onRepost: () => void;
   onShare: () => void;
+  onOpenNetwork?: () => void;
 }
 
 export function VideoFeedItem({
@@ -42,11 +44,17 @@ export function VideoFeedItem({
   onComment,
   onRepost,
   onShare,
+  onOpenNetwork,
 }: VideoFeedItemProps) {
   const { colors } = useAppTheme();
   const { animationsEnabled, dataSaver } = usePerformance();
   const insets = useSafeAreaInsets();
   const isDemo = post.id.startsWith('demo-');
+
+  const handleOpenNetwork = () => {
+    if (!post.originalUrl) return;
+    Linking.openURL(post.originalUrl).catch(() => undefined);
+  };
 
   return (
     <View style={[styles.container, { height, backgroundColor: '#000000' }]}>
@@ -160,6 +168,7 @@ export function VideoFeedItem({
           onComment={onComment}
           onRepost={onRepost}
           onShare={onShare}
+          onOpenNetwork={onOpenNetwork ?? handleOpenNetwork}
         />
       </View>
 

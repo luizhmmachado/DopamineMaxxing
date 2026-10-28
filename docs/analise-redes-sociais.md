@@ -13,6 +13,16 @@ A estratégia adotada é:
 
 O app não faz scraping, não usa automação de navegador e não armazena tokens de redes sociais.
 
+## Estratégia launcher agregador (feeds sem API livre)
+
+Para redes sem API oficial viável (Instagram, TikTok, X, Threads, Facebook, LinkedIn, Pinterest), o app não tenta reproduzir o feed dentro de uma WebView nem quebrar o design dark/premium. Em vez disso, adota um comportamento de "launcher agregador":
+
+- Cada post no feed exibe a ação "Abrir na rede", que abre o link nativo da postagem via `Linking.openURL` (app oficial da rede instalado ou fallback para a web).
+- O feed do DopamineMaxxing mantém sua identidade visual, mas a leitura profunda fica delegada ao app oficial da rede, preservando sessões, cookies e termos de cada plataforma.
+- Uma WebView só é aceitável como tela opcional e separada (não no feed), com aviso claro de que a experiência é da rede externa.
+
+Não há token coletável do usuário que habilite o feed pessoal dessas redes: Instagram, TikTok, X e Threads não expõem o feed de contas seguidas gratuitamente, mesmo com token do usuário.
+
 ## Matriz de APIs
 
 | Rede | API oficial | Gratuita | Feed pessoal | Interações de terceiros | Viabilidade no app | Observações |

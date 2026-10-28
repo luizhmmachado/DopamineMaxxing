@@ -16,6 +16,7 @@ interface FeedActionsProps {
   onComment: () => void;
   onRepost: () => void;
   onShare: () => void;
+  onOpenNetwork?: () => void;
 }
 
 export function FeedActions({
@@ -26,6 +27,7 @@ export function FeedActions({
   onComment,
   onRepost,
   onShare,
+  onOpenNetwork,
 }: FeedActionsProps) {
   const { colors } = useAppTheme();
   const meta = getNetwork(post.network);
@@ -70,6 +72,18 @@ export function FeedActions({
           overlay={overlay}
           active={post.repostedByMe}
           onPress={onRepost}
+        />
+      ) : null}
+      {onOpenNetwork ? (
+        <Action
+          icon="open-outline"
+          color={baseColor}
+          mutedColor={mutedColor}
+          label="Abrir na rede"
+          count=""
+          orientation={orientation}
+          overlay={overlay}
+          onPress={onOpenNetwork}
         />
       ) : null}
       <Action
